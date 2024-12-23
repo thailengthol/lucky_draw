@@ -3,17 +3,50 @@ body, .stApp {
     font-family: 'Arial', sans-serif; /* Global font family */
     margin: 0;
     padding: 0;
-    background-color: #ecf0f1; /* Light background */
-    color: #2C3E50; /* Default text color */
+    background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Warm gradient for a cozy festive feel */
+    color: #fff; /* Light text color for general body text */
 }
 
 /* Title Styling */
 .title {
     text-align: center;
-    color: #3498db;
+    color: #fff; /* White text for contrast */
     font-size: 36px;
     font-weight: 700;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Festive glow */
+}
+
+/* Custom Styling for Selectbox */
+div.stSelectbox > label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff; /* White text color */
+    margin-bottom: 10px; /* Add space below the label */
+}
+
+div.stSelectbox > div {
+    background-color: #fff; /* Soft gold background for dropdown */
+    border: 2px solid #ff4500; /* Green border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding for better spacing */
+    color: #2C3E50; /* Text color */
+    font-size: 16px; /* Adjust font size */
+    font-weight: 500;
+}
+
+div.stSelectbox > div:hover {
+    border-color: #006400; /* Darker green on hover */
+}
+
+div.stSelectbox > div > div > div {
+    color: #2C3E50; /* Text color of the dropdown options */
+}
+
+/* Focus Style */
+div.stSelectbox > div:focus {
+    border-color: #ff4500; /* Orange border on focus */
+    box-shadow: 0 0 5px rgba(255, 69, 0, 0.5); /* Orange glow on focus */
 }
 
 /* Flexbox Container for Layout */
@@ -28,54 +61,39 @@ body, .stApp {
 
 /* Box Styling */
 .left-box, .right-box {
-    background-color: white;
-    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+    padding: 10px;
     border-radius: 12px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ff4500; /* Orange border for a pop of color */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     margin: 10px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Adjust alignment for content overflow */
     align-items: center;
     overflow: hidden; /* Prevent content overflow */
-}
-
-.left-box {
-    border: 2px solid #2C3E50;
-    background-color: #f8f9fa;
-    padding: 7px;
-    margin: 7px 0;
-    text-align: center;
-}
-
-.right-box {
-    border: 2px solid #2C3E50;
-    background-color: #f8f9fa;
-    padding: 7px;
-    margin: 7px 0;
-    flex: 1;
-    max-height: 700px;
-    overflow-y: auto;
-    text-align: center;
+    color: #2C3E50; /* Dark text color for readability */
 }
 
 /* Winner Details */
 .winner-details {
     margin-top: 20px;
     text-align: center;
-    color: #2C3E50;
+    color: #000; /* Black text for selected winner details */
 }
 
 .winner-details h2 {
     font-size: 24px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    color: #000; /* Black text for better visibility */
 }
 
 .winner-details h4 {
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 5px;
+    color: #000; /* Black text */
 }
 
 /* Winner Table Styling */
@@ -84,6 +102,7 @@ body, .stApp {
     border-collapse: collapse;
     margin: 15px 0;
     font-size: 18px;
+    text-align: left;
 }
 
 .winner-table th, .winner-table td {
@@ -93,7 +112,7 @@ body, .stApp {
 }
 
 .winner-table th {
-    background-color: #3498db;
+    background-color: #b22222; /* Red header */
     color: white;
     font-weight: 700;
     position: sticky; /* Keep header visible during scroll */
@@ -103,35 +122,47 @@ body, .stApp {
 
 .winner-table td {
     background-color: #f9f9f9;
+    color: #2C3E50; /* Dark text for better readability */
 }
 
 .winner-table tr:nth-child(even) td {
-    background-color: #f1f1f1;
+    background-color: #e8f8e8; /* Subtle green for even rows */
 }
 
 .winner-table tr:nth-child(odd) td {
-    background-color: #ffffff;
+    background-color: #ffffff; /* White for odd rows */
 }
 
 .winner-table tr:hover td {
-    background-color: #e8f7fc; /* Highlight row on hover */
+    background-color: #fdebd0; /* Highlight row on hover */
 }
 
 /* Button Styling */
 .start-button {
-    background-color: #3498db;
+    background-color: #b22222; /* Festive red */
     color: white;
-    font-size: 18px;
-    padding: 10px 30px;
-    border-radius: 8px;
+    font-size: 20px; /* Larger font size for better readability */
+    padding: 15px 35px; /* Larger padding for better clickability */
+    border-radius: 10px; /* Rounded button edges */
     border: none;
     cursor: pointer;
     margin-bottom: 20px; /* Space above the button */
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .start-button:hover {
-    background-color: #2980b9;
+    background-color: #ff4500; /* Brighter red on hover */
+    transform: scale(1.05); /* Slight scaling on hover for better interaction */
+}
+
+/* Animation Text Styling */
+.animation-text {
+    font-size: 36px; /* Larger font size */
+    font-weight: 600;
+    color: #fff; /* White for contrast */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow for better visibility */
+    margin-top: 50px;
+    text-align: center;
 }
 
 /* Responsive Design */
@@ -155,12 +186,16 @@ body, .stApp {
     }
 
     .start-button {
-        font-size: 16px;
-        padding: 8px 20px;
+        font-size: 18px;
+        padding: 12px 30px;
     }
 
     .winner-table {
-        font-size: 12px; /* Smaller font size on mobile */
+        font-size: 14px; /* Smaller font size on mobile */
+    }
+
+    .animation-text {
+        font-size: 30px; /* Smaller font size for mobile */
     }
 }
 
@@ -171,6 +206,21 @@ body, .stApp {
     }
 
     .start-button {
-        padding: 6px 18px;
+        padding: 10px 25px;
     }
 }
+/* customizable snowflake styling */
+.snowflake {
+    color: #FFF;
+    font-size: 1em;
+    font-family: Arial;
+    text-shadow: 0 0 1px #000;
+  }
+  
+  @-webkit-keyframes snowflakes-fall{0%{top:-10%}100%{top:100%}}@-webkit-keyframes snowflakes-shake{0%{-webkit-transform:translateX(0px);transform:translateX(0px)}50%{-webkit-transform:translateX(80px);transform:translateX(80px)}100%{-webkit-transform:translateX(0px);transform:translateX(0px)}}@keyframes snowflakes-fall{0%{top:-10%}100%{top:100%}}@keyframes snowflakes-shake{0%{transform:translateX(0px)}50%{transform:translateX(80px)}100%{transform:translateX(0px)}}.snowflake{position:fixed;top:-10%;z-index:9999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default;-webkit-animation-name:snowflakes-fall,snowflakes-shake;-webkit-animation-duration:10s,3s;-webkit-animation-timing-function:linear,ease-in-out;-webkit-animation-iteration-count:infinite,infinite;-webkit-animation-play-state:running,running;animation-name:snowflakes-fall,snowflakes-shake;animation-duration:10s,3s;animation-timing-function:linear,ease-in-out;animation-iteration-count:infinite,infinite;animation-play-state:running,running}.snowflake:nth-of-type(0){left:1%;-webkit-animation-delay:0s,0s;animation-delay:0s,0s}.snowflake:nth-of-type(1){left:10%;-webkit-animation-delay:1s,1s;animation-delay:1s,1s}.snowflake:nth-of-type(2){left:20%;-webkit-animation-delay:6s,.5s;animation-delay:6s,.5s}.snowflake:nth-of-type(3){left:30%;-webkit-animation-delay:4s,2s;animation-delay:4s,2s}.snowflake:nth-of-type(4){left:40%;-webkit-animation-delay:2s,2s;animation-delay:2s,2s}.snowflake:nth-of-type(5){left:50%;-webkit-animation-delay:8s,3s;animation-delay:8s,3s}.snowflake:nth-of-type(6){left:60%;-webkit-animation-delay:6s,2s;animation-delay:6s,2s}.snowflake:nth-of-type(7){left:70%;-webkit-animation-delay:2.5s,1s;animation-delay:2.5s,1s}.snowflake:nth-of-type(8){left:80%;-webkit-animation-delay:1s,0s;animation-delay:1s,0s}.snowflake:nth-of-type(9){left:90%;-webkit-animation-delay:3s,1.5s;animation-delay:3s,1.5s}
+  
+  
+  /* [OPTIONAL] hide streamlit branding */
+  #MainMenu {visibility: hidden;}
+  footer {visibility: hidden;}
+  header {visibility: hidden;}
