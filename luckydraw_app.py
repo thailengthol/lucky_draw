@@ -1,161 +1,176 @@
-import streamlit as st
-import random
-import pandas as pd
-import time
+/* General App Styling */
+body, .stApp {
+    font-family: 'Arial', sans-serif; /* Global font family */
+    margin: 0;
+    padding: 0;
+    background-color: #ecf0f1; /* Light background */
+    color: #2C3E50; /* Default text color */
+}
 
-# Load data from CSV files with caching for efficiency
-@st.cache_data
-def load_data(file_name):
-    return pd.read_csv(file_name)
+/* Title Styling */
+.title {
+    text-align: center;
+    color: #3498db;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
 
-# Simulate random name animation
-def animate_names(participants, placeholder, delay=0.5):
-    for _ in range(10):  # Simulate 10 quick randomizations
-        name = random.choice(participants)["Name"]
-        placeholder.markdown(
-            f"<h2 style='text-align: center; color: #2C3E50;'>{name}</h2>", 
-            unsafe_allow_html=True
-        )
-        time.sleep(delay)
-    placeholder.empty()
+/* Flexbox Container for Layout */
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 20px; /* Space between left and right boxes */
+}
 
-# Function to load custom CSS from an external file
-def load_custom_css(css_file_path="style/style.css"):
-    with open(css_file_path, "r") as f:
-        css_content = f.read()
-    st.markdown(f"<style>{css_content}</style>", unsafe_allow_html=True)
+/* Box Styling */
+.left-box, .right-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Adjust alignment for content overflow */
+    align-items: center;
+    overflow: hidden; /* Prevent content overflow */
+}
 
-st.set_page_config(page_title="MRC Retreat 2024", page_icon=":tada:", layout="wide")
+.left-box {
+    border: 2px solid #2C3E50;
+    background-color: #f8f9fa;
+    padding: 7px;
+    margin: 7px 0;
+    text-align: center;
+}
 
-# Main Streamlit App
-def main():
-    # Load custom styles from external CSS file
-    load_custom_css()
+.right-box {
+    border: 2px solid #2C3E50;
+    background-color: #f8f9fa;
+    padding: 7px;
+    margin: 7px 0;
+    flex: 1;
+    max-height: 700px;
+    overflow-y: auto;
+    text-align: center;
+}
 
-    # Header section
-    header_col1, header_col2 = st.columns([1, 0.2])
-    with header_col1:
-        st.markdown("<h1 class='title'>🎉 MRC Retreat 2024 - Lucky Draw 🎉</h1>", unsafe_allow_html=True)
-    with header_col2:
-        start_lucky_draw = st.button("Start Lucky Draw", key="start_draw", help="Click to start drawing winners")
+/* Winner Details */
+.winner-details {
+    margin-top: 20px;
+    text-align: center;
+    color: #2C3E50;
+}
 
-    # Load participant and prize data
-    participants = load_data("participants.csv").to_dict(orient="records")
-    prizes = load_data("prizes.csv").to_dict(orient="records")
+.winner-details h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
 
-    # Session state initialization
-    if "remaining_participants" not in st.session_state:
-        st.session_state.remaining_participants = participants
-        st.session_state.remaining_prizes = prizes
-        st.session_state.winners = []
+.winner-details h4 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
 
-    # Select prize group from available prize groups
-    groups = {prize["Group"] for prize in st.session_state.remaining_prizes}
-    selected_group = st.selectbox("Select a prize group:", list(groups))
+/* Winner Table Styling */
+.winner-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 18px;
+}
 
-    # Layout containers for fixed boxes
-    st.markdown('<div class="container">', unsafe_allow_html=True)
-    left_col, right_col = st.columns([0.2, 1])
+.winner-table th, .winner-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
 
-    # Left box: drawing winner animation and display
-    with left_col:
-        st.markdown('<div class="left-box">', unsafe_allow_html=True)
-        st.markdown("### Looking for the winner...")
-        animation_placeholder = st.empty()
-        winner_placeholder = st.empty()
-        st.markdown('</div>', unsafe_allow_html=True)
+.winner-table th {
+    background-color: #3498db;
+    color: white;
+    font-weight: 700;
+    position: sticky; /* Keep header visible during scroll */
+    top: 0;
+    z-index: 2; /* Ensure it stays above table rows */
+}
 
-    # Right box: display winners for selected prize group
-    with right_col:
-        st.markdown('<div class="right-box">', unsafe_allow_html=True)
-        st.markdown("### Winners List for selected prize")
-        group_winners_table_placeholder = st.empty()
-        st.markdown('</div>', unsafe_allow_html=True)
+.winner-table td {
+    background-color: #f9f9f9;
+}
 
-    # Start lucky draw logic
-    if start_lucky_draw:
-        # Filter prizes for the selected group
-        group_prizes = [prize for prize in st.session_state.remaining_prizes if prize["Group"] == selected_group]
-        if len(st.session_state.remaining_participants) < len(group_prizes):
-            st.error("Not enough participants for this group. Select a different group.")
-            return
+.winner-table tr:nth-child(even) td {
+    background-color: #f1f1f1;
+}
 
-        for idx, prize in enumerate(group_prizes):
-            # Simulate random name animation
-            with left_col:
-                animate_names(st.session_state.remaining_participants, animation_placeholder)
+.winner-table tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
 
-            # Select a winner
-            winner = random.choice(st.session_state.remaining_participants)
-            st.session_state.winners.append({"No.": idx + 1, "Name": winner["Name"], "Prize": prize["Prize"]})
+.winner-table tr:hover td {
+    background-color: #e8f7fc; /* Highlight row on hover */
+}
 
-            # Display winner details in the left column
-            with left_col:
-                winner_placeholder.markdown(
-                    f"""
-                    <div class="winner-details">
-                        <h2>🎉 Winner {idx + 1}</h2>
-                        <h4>Name: {winner['Name']}</h4>
-                        <h4>Prize: {prize['Prize']}</h4>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+/* Button Styling */
+.start-button {
+    background-color: #3498db;
+    color: white;
+    font-size: 18px;
+    padding: 10px 30px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px; /* Space above the button */
+    transition: background-color 0.3s ease;
+}
 
-            # Display the group winners list in the right column
-            with right_col:
-                with group_winners_table_placeholder:
-                    group_winners_df = pd.DataFrame(st.session_state.winners)
-                    group_winners_df_filtered = group_winners_df[group_winners_df["Prize"] == prize["Prize"]]
-                    
-                    # Split winners into multiple columns based on the number of winners
-                    num_winners = len(group_winners_df_filtered)
-                    num_columns = 3 if num_winners >= 12 else 2 if num_winners >= 8 else 1
-                    cols = st.columns(num_columns)
+.start-button:hover {
+    background-color: #2980b9;
+}
 
-                    # Distribute winners among columns
-                    start_idx = 0
-                    winners_per_col = num_winners // num_columns
-                    for i in range(num_columns):
-                        end_idx = start_idx + winners_per_col if i < num_columns - 1 else num_winners
-                        with cols[i]:
-                            st.markdown(
-                                group_winners_df_filtered.iloc[start_idx:end_idx].to_html(
-                                    index=False, classes="winner-table", escape=False
-                                ),
-                                unsafe_allow_html=True,
-                            )
-                        start_idx = end_idx
-            # Remove the winner and prize from session state
-            st.session_state.remaining_participants.remove(winner)
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
 
-        # Remove prizes from the selected group
-        st.session_state.remaining_prizes = [
-            prize for prize in st.session_state.remaining_prizes if prize["Group"] != selected_group
-        ]
+    .left-box, .right-box {
+        width: 90%; /* Adjust width on mobile */
+        margin: 10px 0;
+    }
 
-    # Display a summary of all winners at the end
-    st.markdown("### All Winners Summary")
-    all_winners_df = pd.DataFrame(st.session_state.winners)
-    # Ensure the DataFrame has the correct columns and add winner number for better clarity
-    # Assuming you have columns like "Name" and "Prize" when adding winners
-    if not all_winners_df.empty:
-        # Add a "Winner Number" column for sequential numbering
-        all_winners_df["No."] = range(1, len(all_winners_df) + 1)
+    .winner-details h2 {
+        font-size: 20px;
+    }
 
-        # Select the columns to display: "Winner Number", "Name", and "Prize"
-        all_winners_df = all_winners_df[["No.", "Name", "Prize"]]
+    .winner-details h4 {
+        font-size: 14px;
+    }
 
-        # Display winners summary table with better formatting
-        st.markdown(
-            all_winners_df.to_html(index=False, classes="winner-table", escape=False),
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown("<p>No winners selected yet. Start the draw to see results.</p>", unsafe_allow_html=True)
+    .start-button {
+        font-size: 16px;
+        padding: 8px 20px;
+    }
 
-    st.markdown('</div>', unsafe_allow_html=True)
+    .winner-table {
+        font-size: 12px; /* Smaller font size on mobile */
+    }
+}
 
+/* Add spacing for mobile layout */
+@media (max-width: 500px) {
+    .title {
+        font-size: 28px; /* Smaller title on mobile */
+    }
 
-if __name__ == "__main__":
-    main()
+    .start-button {
+        padding: 6px 18px;
+    }
+}
