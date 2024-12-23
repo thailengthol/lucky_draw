@@ -23,6 +23,7 @@ body, .stApp {
     width: 100%;
     margin: 0;
     padding: 0;
+    gap: 20px; /* Space between left and right boxes */
 }
 
 /* Box Styling */
@@ -34,21 +35,28 @@ body, .stApp {
     margin: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Adjust alignment for content overflow */
     align-items: center;
+    overflow: hidden; /* Prevent content overflow */
 }
 
 .left-box {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: 2px solid #2C3E50;
+    background-color: #f8f9fa;
+    padding: 7px;
+    margin: 7px 0;
+    text-align: center;
 }
 
 .right-box {
+    border: 2px solid #2C3E50;
+    background-color: #f8f9fa;
+    padding: 7px;
+    margin: 7px 0;
     flex: 1;
     max-height: 700px;
     overflow-y: auto;
+    text-align: center;
 }
 
 /* Winner Details */
@@ -65,8 +73,9 @@ body, .stApp {
 }
 
 .winner-details h4 {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
+    margin-bottom: 5px;
 }
 
 /* Winner Table Styling */
@@ -74,7 +83,7 @@ body, .stApp {
     width: 100%;
     border-collapse: collapse;
     margin: 15px 0;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .winner-table th, .winner-table td {
@@ -87,6 +96,9 @@ body, .stApp {
     background-color: #3498db;
     color: white;
     font-weight: 700;
+    position: sticky; /* Keep header visible during scroll */
+    top: 0;
+    z-index: 2; /* Ensure it stays above table rows */
 }
 
 .winner-table td {
@@ -99,6 +111,10 @@ body, .stApp {
 
 .winner-table tr:nth-child(odd) td {
     background-color: #ffffff;
+}
+
+.winner-table tr:hover td {
+    background-color: #e8f7fc; /* Highlight row on hover */
 }
 
 /* Button Styling */
@@ -126,7 +142,7 @@ body, .stApp {
     }
 
     .left-box, .right-box {
-        width: 100%;
+        width: 90%; /* Adjust width on mobile */
         margin: 10px 0;
     }
 
@@ -141,5 +157,20 @@ body, .stApp {
     .start-button {
         font-size: 16px;
         padding: 8px 20px;
+    }
+
+    .winner-table {
+        font-size: 12px; /* Smaller font size on mobile */
+    }
+}
+
+/* Add spacing for mobile layout */
+@media (max-width: 500px) {
+    .title {
+        font-size: 28px; /* Smaller title on mobile */
+    }
+
+    .start-button {
+        padding: 6px 18px;
     }
 }
